@@ -14,7 +14,7 @@ class DanhMucController extends Controller
      */
     public function index()
     {
-        $data = DanhMuc::all();
+        // $data = DanhMuc::all();
         $data = DanhMuc::orderByDesc("id")->paginate(2);
 
         // paginate() => phân trang
@@ -104,7 +104,8 @@ class DanhMucController extends Controller
         }
 
         return redirect()
-                ->route("admin.danhmuc.index")
+                // ->route("admin.danhmuc.index")  | nếu dùng back() thì xóa cái này và ngược lại
+                ->back()
                 ->with("_success_msg", $msg);
     }
 
@@ -118,9 +119,9 @@ class DanhMucController extends Controller
         DanhMuc::destroy($id);
 
         return redirect()
-                ->route('admin.danhmuc.index')
-                // ->back()
-                ->with("_destroy_msg", "Xóa $ten_danh_muc danh mục thành công!!!");
+                // ->route('admin.danhmuc.index')  | nếu dùng back() thì xóa cái này và ngược lại
+                ->back()
+                ->with("_destroy_msg", "Xóa danh mục '$ten_danh_muc'thành công!!!");
     }
 
     private function customValidate(Request $request)
