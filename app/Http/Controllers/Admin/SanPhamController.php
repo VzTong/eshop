@@ -59,6 +59,15 @@ class SanPhamController extends Controller
             $data["anh_cover"] = $filename;
             $msg = "Thêm sản phẩm " . $data["ten_san_pham"] . " thành công!!!";
         } else {
+            $file = $request->file("anh_cover");
+            if (!empty($file)) {
+                // Tạo tên file ngẫu nhiên để tránh trùng tên, gây lỗi
+                $filename = $file->hashName();
+                // Lưu ở thư mục file với tên file vừa tạo
+                $file->storeAs("/files", $filename);
+                $filename = "/files/" . $filename;
+            }
+            $data["anh_cover"] = $filename;
             $msg = "Cập nhật sản phẩm " . $data["ten_san_pham"] . " thành công!!!";
         }
 
