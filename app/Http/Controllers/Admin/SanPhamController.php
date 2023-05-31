@@ -16,7 +16,6 @@ class SanPhamController extends Controller
         $data = SanPham::orderByDesc("id")->paginate(2);
 
         return view("admin.sanpham.index")->with("data", $data);
-
     }
 
     /**
@@ -41,36 +40,34 @@ class SanPhamController extends Controller
     // Nếu tìm thấy $id thì là update và ngược lại
     public function upsert(Request $request, $id = null)
     {
-            $data = $request->all();
-            unset($data["_token"]);
+        $data = $request->all();
+        unset($data["_token"]);
 
-            // Ràng buộc dữ liệu
-            $this->customValidate($request);
+        // Ràng buộc dữ liệu
+        $this->customValidate($request);
 
-            // Update hoặc insert
-            SanPham::updateOrCreate(["id" => $id], $data);
-            if ($id == null) {
-                $filename = "";
-                $file = $request->file("anh_cover");
-                if(!empty($file)){
-                    // Tạo tên file ngẫu nhiên để tránh trùng tên, gây lỗi
-                    $filename = $file->hashName();
-                    // Lưu ở thư mục file với tên file vừa tạo
-                    $file->storeAs("/file", $filename);
-                    $filename = "/file/" . $filename;
-                }
-                $data["anh_cover"] = $filename;
-                $msg = "Thêm sản phẩm ".$data["ten_san_pham"]." thành công!!!";
-            } else {
-                $msg = "Cập nhật sản phẩm ".$data["ten_san_pham"]." thành công!!!";
+        if ($id == null) {
+            $filename = "";
+            $file = $request->file("anh_cover");
+            if (!empty($file)) {
+                // Tạo tên file ngẫu nhiên để tránh trùng tên, gây lỗi
+                $filename = $file->hashName();
+                // Lưu ở thư mục file với tên file vừa tạo
+                $file->storeAs("/files", $filename);
+                $filename = "/files/" . $filename;
             }
+            $data["anh_cover"] = $filename;
+            $msg = "Thêm sản phẩm " . $data["ten_san_pham"] . " thành công!!!";
+        } else {
+            $msg = "Cập nhật sản phẩm " . $data["ten_san_pham"] . " thành công!!!";
+        }
 
-
-            return redirect()
-                    // ->route("admin.danhmuc.index")  | nếu dùng back() thì xóa cái này và ngược lại
-                    ->back() //Sửa thành công một danh mục nào đó vẫn ở tại phần phân trang đó
-                    ->with("_success_msg", $msg);
-
+        // Update hoặc insert
+        SanPham::updateOrCreate(["id" => $id], $data);
+        return redirect()
+            // ->route("admin.danhmuc.index")  | nếu dùng back() thì xóa cái này và ngược lại
+            ->back() //Sửa thành công một danh mục nào đó vẫn ở tại phần phân trang đó
+            ->with("_success_msg", $msg);
     }
 
     public function destroy(string $id)
@@ -80,7 +77,7 @@ class SanPhamController extends Controller
         SanPham::destroy($id);
 
         return redirect()->back()
-                        ->with("_destroy_msg", "Xóa sản phẩm
+            ->with("_destroy_msg", "Xóa sản phẩm
                         '$ten_san_pham' thành công!!!");
     }
 
