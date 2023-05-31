@@ -105,7 +105,7 @@ class DanhMucController extends Controller
 
         return redirect()
                 // ->route("admin.danhmuc.index")  | nếu dùng back() thì xóa cái này và ngược lại
-                ->back()
+                ->back() //Sửa thành công một danh mục nào đó vẫn ở tại phần phân trang đó
                 ->with("_success_msg", $msg);
     }
 
@@ -120,7 +120,7 @@ class DanhMucController extends Controller
 
         return redirect()
                 // ->route('admin.danhmuc.index')  | nếu dùng back() thì xóa cái này và ngược lại
-                ->back()
+                ->back() // Xóa thành công một danh mục nào đó vẫn ở tại phần phân trang đó
                 ->with("_destroy_msg", "Xóa danh mục '$ten_danh_muc'thành công!!!");
     }
 
