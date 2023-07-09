@@ -14,7 +14,7 @@
                 <x-app-input name="gia" type="number" label="Giá sản phẩm" value="{{$data->gia}}" />
                 <x-app-input name="mo_ta" label="Mô tả sản phẩm" value="{{$data->mo_ta}}" />
                 {{-- <x-app-input name="id_nguoi_tao" label="Tên sản phẩm" value="{{$data->id_nguoi_tao}}" /> --}}
-                <x-app-input name="id_danh_muc" label="ID danh mục sản phẩm" value="{{$data->id_danh_muc}}" />
+                    <x-app-select name="id_danh_muc" label="Danh mục sản phẩm" model="DanhMuc" displayMember="ten_danh_muc" valueMember="id" selected="{{$data->id_danh_muc}}" />
 
                 <div class="mt-3 mb-3">
                     <input type="submit" class="btn btn-outline-success" value="Cập nhật sản phẩm"/>

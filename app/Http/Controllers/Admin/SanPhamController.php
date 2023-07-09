@@ -32,7 +32,7 @@ class SanPhamController extends Controller
     public function edit(string $id)
     {
         $data = SanPham::findOrFail($id);
-        return view("admin.sanpham.edit")->with("data", $data);
+        return view("admin.sanpham.edit", compact("data"));
     }
 
     // Hàm viết chung store và update |
