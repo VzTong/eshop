@@ -27,7 +27,7 @@ class AccountController extends Controller
 
     //Đăng nhập
     public function login(){
-        return view(("account.login"));
+        return view("account.login");
     }
 
     public function auth(Request $request){
